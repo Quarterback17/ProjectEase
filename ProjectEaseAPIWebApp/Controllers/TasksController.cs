@@ -11,47 +11,47 @@ namespace ProjectEaseAPIWebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectsController : ControllerBase
+    public class TasksController : ControllerBase
     {
         private readonly ProjectEaseAPIContext _context;
 
-        public ProjectsController(ProjectEaseAPIContext context)
+        public TasksController(ProjectEaseAPIContext context)
         {
             _context = context;
         }
 
-        // GET: api/Projects
+        // GET: api/Tasks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Project>>> GetProjects()
+        public async Task<ActionResult<IEnumerable<Models.Task>>> GetTasks()
         {
-            return await _context.Projects.ToListAsync();
+            return await _context.Tasks.ToListAsync();
         }
 
-        // GET: api/Projects/5
+        // GET: api/Tasks/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Project>> GetProject(int id)
+        public async Task<ActionResult<Models.Task>> GetTask(int id)
         {
-            var project = await _context.Projects.FindAsync(id);
+            var task = await _context.Tasks.FindAsync(id);
 
-            if (project == null)
+            if (task == null)
             {
                 return NotFound();
             }
 
-            return project;
+            return task;
         }
 
-        // PUT: api/Projects/5
+        // PUT: api/Tasks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProject(int id, Project project)
+        public async Task<IActionResult> PutTask(int id, Models.Task task)
         {
-            if (id != project.Id)
+            if (id != task.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(project).State = EntityState.Modified;
+            _context.Entry(task).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +59,7 @@ namespace ProjectEaseAPIWebApp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProjectExists(id))
+                if (!TaskExists(id))
                 {
                     return NotFound();
                 }
@@ -72,36 +72,36 @@ namespace ProjectEaseAPIWebApp.Controllers
             return NoContent();
         }
 
-        // POST: api/Projects
+        // POST: api/Tasks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Project>> PostProject(Project project)
+        public async Task<ActionResult<Models.Task>> PostTask(Models.Task task)
         {
-            _context.Projects.Add(project);
+            _context.Tasks.Add(task);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProject", new { id = project.Id }, project);
+            return CreatedAtAction("GetTask", new { id = task.Id }, task);
         }
 
-        // DELETE: api/Projects/5
+        // DELETE: api/Tasks/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProject(int id)
+        public async Task<IActionResult> DeleteTask(int id)
         {
-            var project = await _context.Projects.FindAsync(id);
-            if (project == null)
+            var task = await _context.Tasks.FindAsync(id);
+            if (task == null)
             {
                 return NotFound();
             }
 
-            _context.Projects.Remove(project);
+            _context.Tasks.Remove(task);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProjectExists(int id)
+        private bool TaskExists(int id)
         {
-            return _context.Projects.Any(e => e.Id == id);
+            return _context.Tasks.Any(e => e.Id == id);
         }
     }
 }
