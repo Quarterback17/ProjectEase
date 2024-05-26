@@ -18,6 +18,7 @@ namespace ProjectEaseAPIWebApp.Controllers
             _context = context;
         }
 
+
         // GET: Projects
         public async Task<IActionResult> Index()
         {
